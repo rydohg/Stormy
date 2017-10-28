@@ -28,12 +28,12 @@
         app:layout_constraintTop_toTopOf="@+id/high_temp_text_view" />
 
     <TextView
-        android:id="@+id/city_name_text_view"
+        android:id="@+id/date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="8dp"
-        android:text="City Name"
+        android:text="Date"
         app:layout_constraintStart_toStartOf="@+id/weather_image_view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,5 +47,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sun" />
+
+    <TextView
+        android:id="@+id/desc_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="4dp"
+        android:text="Description"
+        app:layout_constraintStart_toStartOf="@+id/weather_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
 
 </android.support.constraint.ConstraintLayout>

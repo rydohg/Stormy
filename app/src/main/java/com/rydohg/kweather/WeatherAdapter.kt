@@ -22,11 +22,13 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>):
 
         val highTempString = kelvinToFahrenheit(forecast.maxTempKelvin).toString() + "°F"
         val lowTempString = kelvinToFahrenheit(forecast.minTempKelvin).toString() + "°F"
-        val cityName = forecast.cityName
+        val desc = forecast.desc
+        val date = unixToFormattedDate(forecast.datetime)
 
         holder.highTempTextView.text = highTempString
         holder.lowTempTextView.text = lowTempString
-        holder.cityName.text = cityName
+        holder.desc.text = desc
+        holder.date.text = date
     }
 
     override fun getItemCount(): Int {
@@ -36,7 +38,8 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>):
     inner class CustomViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         var highTempTextView: TextView = rootView.findViewById(R.id.high_temp_text_view)
         var lowTempTextView: TextView = rootView.findViewById(R.id.low_temp_text_view)
-        var cityName: TextView = rootView.findViewById(R.id.city_name_text_view)
+        var desc: TextView = rootView.findViewById(R.id.desc_text_view)
+        var date: TextView = rootView.findViewById(R.id.date_text_view)
     }
 
 }

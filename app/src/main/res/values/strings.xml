@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KWeather</string>
+    <string name="weather_image_desc">Weather Image</string>
 </resources>

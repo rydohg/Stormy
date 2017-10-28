@@ -6,7 +6,7 @@ import org.json.JSONObject
 data class Forecast(val cityName: String, val maxTempKelvin: Int, val minTempKelvin: Int)
 
 class JsonParser(response: String?) {
-    val cityName: String?
+    private val cityName: String?
     val parsedForecasts: ArrayList<Forecast>
 
     init {
@@ -16,7 +16,7 @@ class JsonParser(response: String?) {
 
         parsedForecasts = ArrayList()
 
-        for (i in 0 until rawForecastList.length()) {
+        (0 until rawForecastList.length()).forEach { i ->
             val jsonForecast = rawForecastList.getJSONObject(i)
             val temperatures = jsonForecast.getJSONObject("temp")
             val forecast = Forecast(cityName, temperatures.getInt("max"), temperatures.getInt("min"))

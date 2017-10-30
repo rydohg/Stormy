@@ -1,4 +1,4 @@
-package com.rydohg.kweather
+package com.rydohg.kweather.utils
 
 import org.json.JSONObject
 

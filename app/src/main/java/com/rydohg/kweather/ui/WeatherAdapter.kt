@@ -1,4 +1,4 @@
-package com.rydohg.kweather
+package com.rydohg.kweather.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.view.View
 import android.widget.ImageView
+import com.rydohg.kweather.*
+import com.rydohg.kweather.utils.Forecast
+import com.rydohg.kweather.utils.kelvinToFahrenheit
+import com.rydohg.kweather.utils.unixToFormattedDate
 
 
 class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>): RecyclerView.Adapter<WeatherAdapter.CustomViewHolder>(){

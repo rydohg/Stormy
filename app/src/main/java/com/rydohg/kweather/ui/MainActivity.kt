@@ -1,4 +1,4 @@
-package com.rydohg.kweather
+package com.rydohg.kweather.ui
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask
@@ -10,6 +10,8 @@ import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import android.support.v7.widget.DividerItemDecoration
+import com.rydohg.kweather.utils.JsonParser
+import com.rydohg.kweather.R
 
 
 class MainActivity : AppCompatActivity() {

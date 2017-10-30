@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.ImageView
 import com.rydohg.kweather.*
 import com.rydohg.kweather.utils.Forecast
+import com.rydohg.kweather.utils.imageFromDesc
 import com.rydohg.kweather.utils.kelvinToFahrenheit
 import com.rydohg.kweather.utils.unixToFormattedDate
 
@@ -38,23 +39,6 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>):
         holder.desc.text = desc
         holder.date.text = date
         holder.image.setImageDrawable(imageFromDesc(desc))
-    }
-
-    private fun imageFromDesc(desc: String): Drawable? {
-        val context = MyApplication.applicationContext()
-        return when (desc) {
-            "Sun" -> drawableForId(R.drawable.sun, context)
-            "Rain" -> drawableForId(R.drawable.rain, context)
-            else -> drawableForId(R.drawable.sun, context)
-        }
-    }
-
-    private fun drawableForId(id: Int, context: Context): Drawable {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            context.resources.getDrawable(id, context.theme)
-        } else {
-            context.resources.getDrawable(id)
-        }
     }
 
     override fun getItemCount(): Int {

@@ -10,8 +10,13 @@ import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import android.support.v7.widget.DividerItemDecoration
+import android.widget.ImageView
+import android.widget.TextView
 import com.rydohg.kweather.utils.JsonParser
 import com.rydohg.kweather.R
+import com.rydohg.kweather.utils.imageFromDesc
+import com.rydohg.kweather.utils.kelvinToFahrenheit
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("StaticFieldLeak")
-    inner class NetworkAsyncTask: AsyncTask<Void, Void, String>() {
+    inner class NetworkAsyncTask : AsyncTask<Void, Void, String>() {
         override fun doInBackground(vararg p0: Void?): String {
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -55,6 +60,15 @@ class MainActivity : AppCompatActivity() {
 
             recyclerView.adapter = WeatherAdapter(parser.parsedForecasts)
 
+            val todayForecast = parser.parsedForecasts[0]
+
+            val todayImageView = findViewById<ImageView>(R.id.todayImageView)
+            val minMaxTextView = findViewById<TextView>(R.id.min_max_text_view)
+
+            val todayForecastString = kelvinToFahrenheit(todayForecast.maxTempKelvin).toString() + "/" + kelvinToFahrenheit(todayForecast.minTempKelvin)
+            minMaxTextView.text = todayForecastString
+
+            todayImageView.setImageDrawable(imageFromDesc(todayForecast.desc))
         }
     }
 }

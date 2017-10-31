@@ -52,17 +52,10 @@ class SettingsActivity : AppCompatPreferenceActivity() {
         }
         return super.onMenuItemSelected(featureId, item)
     }
-
-    /**
-     * {@inheritDoc}
-     */
     override fun onIsMultiPane(): Boolean {
         return isXLargeTablet(this)
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     override fun onBuildHeaders(target: List<PreferenceActivity.Header>) {
         loadHeadersFromResource(R.xml.pref_headers, target)
@@ -176,13 +169,12 @@ class SettingsActivity : AppCompatPreferenceActivity() {
             if (preference is ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
-                val listPreference = preference
-                val index = listPreference.findIndexOfValue(stringValue)
+                val index = preference.findIndexOfValue(stringValue)
 
                 // Set the summary to reflect the new value.
                 preference.setSummary(
                         if (index >= 0)
-                            listPreference.entries[index]
+                            preference.entries[index]
                         else
                             null)
 
@@ -216,10 +208,6 @@ class SettingsActivity : AppCompatPreferenceActivity() {
             true
         }
 
-        /**
-         * Helper method to determine if the device has an extra-large screen. For
-         * example, 10" tablets are extra-large.
-         */
         private fun isXLargeTablet(context: Context): Boolean {
             return context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_XLARGE
         }

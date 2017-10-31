@@ -16,7 +16,10 @@ import com.rydohg.kweather.utils.JsonParser
 import com.rydohg.kweather.R
 import com.rydohg.kweather.utils.imageFromDesc
 import com.rydohg.kweather.utils.kelvinToFahrenheit
-import kotlinx.android.synthetic.main.activity_main.*
+import android.view.Menu
+import android.view.MenuItem
+import android.content.Intent
+import com.rydohg.kweather.SettingsActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +29,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         NetworkAsyncTask().execute()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.settings_item -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     @SuppressLint("StaticFieldLeak")

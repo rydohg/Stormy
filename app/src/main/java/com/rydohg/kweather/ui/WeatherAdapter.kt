@@ -1,23 +1,20 @@
 package com.rydohg.kweather.ui
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.TextView
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import com.rydohg.kweather.*
+import android.widget.TextView
+import com.rydohg.kweather.R
 import com.rydohg.kweather.utils.Forecast
 import com.rydohg.kweather.utils.imageFromDesc
 import com.rydohg.kweather.utils.kelvinToFahrenheit
 import com.rydohg.kweather.utils.unixToFormattedDate
 
 
-class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>): RecyclerView.Adapter<WeatherAdapter.CustomViewHolder>(){
+class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>) : RecyclerView.Adapter<WeatherAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CustomViewHolder {
         val layout = LayoutInflater.from(parent?.context)

@@ -1,18 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- A 'parent' preference, which enables/disables child preferences (below)
-         when checked/unchecked. -->
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="notifications_new_message"
-        android:title="@string/pref_title_new_message_notifications" />
-
     <ListPreference
         android:defaultValue="1"
         android:entries="@array/temp_scale"
         android:entryValues="@array/temp_scale"
-        android:key="list_preference_1"
-        android:summary="Imperial (US)"
+        android:key="measurement_system_preference"
         android:title="Degrees" />
 
 </PreferenceScreen>

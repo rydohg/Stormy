@@ -3,17 +3,19 @@ package com.rydohg.kweather.utils
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.Log
 import com.rydohg.kweather.MyApplication
 import com.rydohg.kweather.R
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun kelvinToCelsius(temp: Int): Int {
-    return temp - 273
+    return (temp - 273.15).toInt()
 }
 
 fun kelvinToFahrenheit(temp: Int): Int {
-    return (kelvinToCelsius(temp) * 1.8 + 32).toInt()
+    Log.d("Conversion", temp.toString())
+    return (1.8 * (temp - 273.15) + 32).toInt()
 }
 
 fun unixToDate(datetime: Long): Date {

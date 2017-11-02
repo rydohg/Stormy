@@ -10,6 +10,7 @@ import android.preference.*
 import android.support.v4.app.NavUtils
 import android.text.TextUtils
 import android.view.MenuItem
+import com.rydohg.kweather.ui.MainActivity
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
@@ -81,7 +82,7 @@ class SettingsActivity : AppCompatPreferenceActivity() {
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
             val id = item.itemId
             if (id == android.R.id.home) {
-                startActivity(Intent(activity, SettingsActivity::class.java))
+                startActivity(Intent(activity, MainActivity::class.java))
                 return true
             }
             return super.onOptionsItemSelected(item)

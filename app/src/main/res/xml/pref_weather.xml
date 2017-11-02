@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:defaultValue="1"
+        android:defaultValue="@string/pref_default_temp_scale"
         android:entries="@array/temp_scale"
         android:entryValues="@array/temp_scale"
         android:key="measurement_system_preference"

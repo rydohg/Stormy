@@ -75,4 +75,5 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="settings_menu_item">Settings</string>
+    <string name="pref_default_temp_scale">Imperial (US)</string>
 </resources>

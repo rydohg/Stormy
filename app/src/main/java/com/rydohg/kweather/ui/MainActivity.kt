@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.preference.PreferenceActivity
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.settings_item -> {
                 val intent = Intent(this, SettingsActivity::class.java)
+                intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.WeatherPreferenceFragment::class.java.name)
+                intent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true)
                 startActivity(intent)
                 true
             }

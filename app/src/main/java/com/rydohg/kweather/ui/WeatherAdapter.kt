@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.rydohg.kweather.R
 import com.rydohg.kweather.utils.Forecast
 import com.rydohg.kweather.utils.imageFromDesc
-import com.rydohg.kweather.utils.kelvinToFahrenheit
 import com.rydohg.kweather.utils.unixToFormattedDate
 
 
@@ -26,8 +25,8 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>) 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val forecast = forecastList[position]
 
-        val highTempString = kelvinToFahrenheit(forecast.maxTempKelvin).toString() + "°F"
-        val lowTempString = kelvinToFahrenheit(forecast.minTempKelvin).toString() + "°F"
+        val highTempString = forecast.maxTempCelsius.toString() + "°C"
+        val lowTempString = forecast.minTempCelsius.toString() + "°C"
         val desc = forecast.desc
         val date = unixToFormattedDate(forecast.datetime)
 

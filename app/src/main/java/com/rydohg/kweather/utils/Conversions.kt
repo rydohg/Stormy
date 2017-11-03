@@ -13,7 +13,7 @@ fun kelvinToCelsius(temp: Int): Int {
     return (temp - 273.15).toInt()
 }
 
-fun kelvinToFahrenheit(temp: Int): Int {
+fun kelvinToFahrenheit(temp: Double): Int {
     Log.d("Conversion", temp.toString())
     return (1.8 * (temp - 273.15) + 32).toInt()
 }
@@ -28,12 +28,14 @@ fun unixToFormattedDate(datetime: Long): String {
 }
 
 fun imageFromDesc(desc: String): Drawable? {
+    //TODO: actually change image for desc
     val context = MyApplication.applicationContext()
-    return when (desc) {
+    return drawableForId(R.drawable.sun, context)
+    /*return when (desc) {
         "Sun" -> drawableForId(R.drawable.sun, context)
         "Rain" -> drawableForId(R.drawable.rain, context)
         else -> drawableForId(R.drawable.sun, context)
-    }
+    }*/
 }
 
 fun drawableForId(id: Int, context: Context): Drawable {

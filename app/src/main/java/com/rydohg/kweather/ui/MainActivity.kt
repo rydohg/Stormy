@@ -18,7 +18,6 @@ import com.rydohg.kweather.R
 import com.rydohg.kweather.SettingsActivity
 import com.rydohg.kweather.utils.JsonParser
 import com.rydohg.kweather.utils.imageFromDesc
-import com.rydohg.kweather.utils.kelvinToFahrenheit
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             try {
                 val client = OkHttpClient()
                 val request = Request.Builder()
-                        .url("http://api.openweathermap.org/data/2.5/forecast/daily?zip=32904,us&appid=829aad9b0941ffc8fbb7a9d2ad9c334c")
+                        .url("https://api.darksky.net/forecast/b4822f79a3e2eb953e67f91123313d27/28.071672,-80.653603")
                         .build()
                 val response = client.newCall(request).execute()
 
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             val todayImageView = findViewById<ImageView>(R.id.todayImageView)
             val minMaxTextView = findViewById<TextView>(R.id.min_max_text_view)
 
-            val todayForecastString = kelvinToFahrenheit(todayForecast.maxTempKelvin).toString() + "/" + kelvinToFahrenheit(todayForecast.minTempKelvin)
+            val todayForecastString = todayForecast.maxTempCelsius.toString() + "/" + todayForecast.minTempCelsius.toString()
             minMaxTextView.text = todayForecastString
 
             todayImageView.setImageDrawable(imageFromDesc(todayForecast.desc))

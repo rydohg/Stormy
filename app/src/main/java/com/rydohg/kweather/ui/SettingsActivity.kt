@@ -1,4 +1,4 @@
-package com.rydohg.kweather
+package com.rydohg.kweather.ui
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import android.preference.*
 import android.support.v4.app.NavUtils
 import android.text.TextUtils
 import android.view.MenuItem
-import com.rydohg.kweather.ui.MainActivity
+import com.rydohg.kweather.R
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On

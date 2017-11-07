@@ -1,4 +1,4 @@
-package com.rydohg.kweather
+package com.rydohg.kweather.ui
 
 import android.content.res.Configuration
 import android.os.Bundle

@@ -2,8 +2,7 @@ package com.rydohg.kweather.utils
 
 import org.json.JSONObject
 
-// OpenWeatherMap returns temp in Kelvin and pressure in hPa
-data class Forecast(val cityName: String, val datetime: Long, val desc: String, val maxTempCelsius: Double, val minTempCelsius: Double)
+data class Forecast(val cityName: String, val datetime: Long, val desc: String, val iconName: String, val maxTempCelsius: Double, val minTempCelsius: Double)
 
 class JsonParser(response: String?) {
     private val cityName: String?
@@ -22,11 +21,13 @@ class JsonParser(response: String?) {
             val high = jsonForecast.getDouble("temperatureHigh")
             val low = jsonForecast.getDouble("temperatureLow")
             val description = jsonForecast.getString("summary")
+            val iconString = jsonForecast.getString("icon")
 
             val forecast = Forecast(
                     cityName,
                     jsonForecast.getLong("time"),
                     description,
+                    iconString,
                     high,
                     low
             )

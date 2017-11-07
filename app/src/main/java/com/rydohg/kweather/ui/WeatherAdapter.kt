@@ -25,8 +25,8 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>) 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val forecast = forecastList[position]
 
-        val highTempString = forecast.maxTempCelsius.toString() + "°C"
-        val lowTempString = forecast.minTempCelsius.toString() + "°C"
+        val highTempString = forecast.maxTempCelsius.toString() + "°F"
+        val lowTempString = forecast.minTempCelsius.toString() + "°F"
         val desc = forecast.desc
         val date = unixToFormattedDate(forecast.datetime)
 
@@ -34,7 +34,7 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>) 
         holder.lowTempTextView.text = lowTempString
         holder.desc.text = desc
         holder.date.text = date
-        holder.image.setImageDrawable(imageFromDesc(desc))
+        holder.image.setImageDrawable(imageFromDesc(forecast.iconName))
     }
 
     override fun getItemCount(): Int {
@@ -48,5 +48,4 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>) 
         var date: TextView = rootView.findViewById(R.id.date_text_view)
         var image: ImageView = rootView.findViewById(R.id.weather_image_view)
     }
-
 }

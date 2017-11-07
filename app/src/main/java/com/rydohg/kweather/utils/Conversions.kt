@@ -30,12 +30,13 @@ fun unixToFormattedDate(datetime: Long): String {
 fun imageFromDesc(desc: String): Drawable? {
     //TODO: actually change image for desc
     val context = MyApplication.applicationContext()
-    return drawableForId(R.drawable.sun, context)
-    /*return when (desc) {
-        "Sun" -> drawableForId(R.drawable.sun, context)
-        "Rain" -> drawableForId(R.drawable.rain, context)
+//    return drawableForId(R.drawable.sun, context)
+    return when (desc) {
+        "rain" -> drawableForId(R.drawable.rain, context)
+        "partly-cloudy-day" -> drawableForId(R.drawable.partly_cloudy, context)
+        "partly-cloudy-night" -> drawableForId(R.drawable.partly_cloudy, context)
         else -> drawableForId(R.drawable.sun, context)
-    }*/
+    }
 }
 
 fun drawableForId(id: Int, context: Context): Drawable {

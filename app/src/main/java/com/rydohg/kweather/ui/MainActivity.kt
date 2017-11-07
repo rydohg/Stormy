@@ -15,7 +15,6 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import com.rydohg.kweather.R
-import com.rydohg.kweather.SettingsActivity
 import com.rydohg.kweather.utils.JsonParser
 import com.rydohg.kweather.utils.imageFromDesc
 import okhttp3.OkHttpClient

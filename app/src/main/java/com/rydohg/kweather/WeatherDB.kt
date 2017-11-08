@@ -1,9 +1,9 @@
 package com.rydohg.kweather
 
 import android.content.Context
-import android.provider.BaseColumns
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.provider.BaseColumns
 
 object WeatherDBContract {
     val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " +
@@ -39,7 +39,7 @@ class WeatherDBSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABA
     }
 
     companion object {
-        private val DATABASE_VERSION = 2
+        private val DATABASE_VERSION = 1
         val DATABASE_NAME = "weather_db"
     }
 }

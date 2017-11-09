@@ -2,7 +2,9 @@ package com.rydohg.kweather.ui
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.preference.PreferenceActivity
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (!areForecastsRecent()) {
+        if (!areForecastsRecent() && isNetworkAvailable()) {
             NetworkAsyncTask().execute()
         } else {
             Log.d("MainActivity", "Loading from DB")
@@ -80,6 +82,12 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
     private fun areForecastsRecent(): Boolean {

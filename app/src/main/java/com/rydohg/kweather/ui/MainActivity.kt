@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.preference.PreferenceActivity
-import android.provider.BaseColumns
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -26,6 +25,7 @@ import com.rydohg.kweather.utils.unixToDate
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,7 +37,28 @@ class MainActivity : AppCompatActivity() {
         if (!areForecastsRecent()) {
             NetworkAsyncTask().execute()
         } else {
+            Log.d("MainActivity", "Loading from DB")
+            val db = WeatherDBSQLiteHelper(this).readableDatabase
+            val cursor = db.query(WeatherDBContract.ForecastEntry.TABLE_NAME, WeatherDBContract.ForecastEntry.projection, null, null, null, null, null)
 
+            val forecasts = ArrayList<Forecast>()
+
+            cursor.moveToFirst()
+
+            do {
+                val high = cursor.getDouble(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP))
+                val low = cursor.getDouble(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP))
+                val date = cursor.getLong(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_DATE))
+                val desc = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_DESC))
+                val iconName = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_ICON_NAME))
+                /*val pressure = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_PRESSURE))
+                val zipCode = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_ZIP_CODE))*/
+
+                forecasts.add(Forecast("West Melbourne", date, desc, iconName, high, low))
+            } while (cursor.moveToNext())
+
+            populateRecyclerView(forecasts)
+            cursor.close()
         }
 
     }
@@ -64,32 +85,27 @@ class MainActivity : AppCompatActivity() {
     private fun areForecastsRecent(): Boolean {
         val db = WeatherDBSQLiteHelper(this).readableDatabase
 
-        val projection = arrayOf(BaseColumns._ID,
-                WeatherDBContract.ForecastEntry.COLUMN_DATE,
-                WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP,
-                WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP,
-                WeatherDBContract.ForecastEntry.COLUMN_ZIP_CODE,
-                WeatherDBContract.ForecastEntry.COLUMN_PRESSURE
-        )
+        val cursor = db.query(WeatherDBContract.ForecastEntry.TABLE_NAME, WeatherDBContract.ForecastEntry.projection, null, null, null, null, null)
+        if (cursor.moveToFirst()) {
+            val datetime = cursor.getLong(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_DATE))
 
-        val cursor = db.query(WeatherDBContract.ForecastEntry.TABLE_NAME, projection, null, null, null, null, null)
-        cursor.moveToFirst()
-        val datetime = cursor.getLong(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_DATE))
+            val currentDate = Calendar.getInstance()
+            val latestForecast = Calendar.getInstance()
+            latestForecast.time = unixToDate(datetime)
 
-        val currentDate = Calendar.getInstance()
-        val latestForecast = Calendar.getInstance()
-        latestForecast.time = unixToDate(datetime)
-
+            return currentDate.get(Calendar.DAY_OF_MONTH) == latestForecast.get(Calendar.DAY_OF_MONTH)
+        }
         cursor.close()
-
-        return currentDate.get(Calendar.DAY_OF_MONTH) == latestForecast.get(Calendar.DAY_OF_MONTH)
+        Log.d("MainActivity", "Forecasts aren't recent")
+        return false
     }
 
     private fun populateRecyclerView(result: String?) {
         val parser = JsonParser(result)
+        populateRecyclerView(parser.parsedForecasts)
+    }
 
-        writeToDB(parser.parsedForecasts)
-
+    private fun populateRecyclerView(result: ArrayList<Forecast>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
         recyclerView.setHasFixedSize(true)
@@ -103,9 +119,9 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.addItemDecoration(mDividerItemDecoration)
 
-        recyclerView.adapter = WeatherAdapter(parser.parsedForecasts)
+        recyclerView.adapter = WeatherAdapter(result)
 
-        val todayForecast = parser.parsedForecasts[0]
+        val todayForecast = result[0]
 
         val todayImageView = findViewById<ImageView>(R.id.todayImageView)
         val minMaxTextView = findViewById<TextView>(R.id.min_max_text_view)
@@ -121,9 +137,10 @@ class MainActivity : AppCompatActivity() {
         for (i in result) {
             val values = ContentValues()
             values.put(WeatherDBContract.ForecastEntry.COLUMN_DATE, i.datetime)
-            // TODO: Make database store them as ints, not strings
-            values.put(WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP, i.maxTempCelsius.toString())
-            values.put(WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP, i.minTempCelsius.toString())
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP, i.maxTempCelsius)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP, i.minTempCelsius)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_DESC, i.desc)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_ICON_NAME, i.iconName)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_PRESSURE, "1")
             values.put(WeatherDBContract.ForecastEntry.COLUMN_ZIP_CODE, "32904")
 
@@ -151,6 +168,8 @@ class MainActivity : AppCompatActivity() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             Log.d("KWeatherMain", result)
+
+            writeToDB(JsonParser(result).parsedForecasts)
 
             populateRecyclerView(result)
         }

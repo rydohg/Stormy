@@ -10,9 +10,11 @@ object WeatherDBContract {
             ForecastEntry.TABLE_NAME + " (" +
             BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             ForecastEntry.COLUMN_ZIP_CODE + " TEXT, " +
-            ForecastEntry.COLUMN_HIGH_TEMP + " TEXT, " +
-            ForecastEntry.COLUMN_LOW_TEMP + " TEXT, " +
+            ForecastEntry.COLUMN_HIGH_TEMP + " DOUBLE, " +
+            ForecastEntry.COLUMN_LOW_TEMP + " DOUBLE, " +
             ForecastEntry.COLUMN_PRESSURE + " TEXT, " +
+            ForecastEntry.COLUMN_DESC + " TEXT, " +
+            ForecastEntry.COLUMN_ICON_NAME + " TEXT, " +
             ForecastEntry.COLUMN_DATE + " TEXT" + ")"
 
     class ForecastEntry : BaseColumns {
@@ -23,6 +25,18 @@ object WeatherDBContract {
             val COLUMN_HIGH_TEMP = "high"
             val COLUMN_LOW_TEMP = "low"
             val COLUMN_PRESSURE = "atm"
+            val COLUMN_DESC = "desc"
+            val COLUMN_ICON_NAME = "icon_name"
+
+            val projection = arrayOf(BaseColumns._ID,
+                    WeatherDBContract.ForecastEntry.COLUMN_DATE,
+                    WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP,
+                    WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP,
+                    WeatherDBContract.ForecastEntry.COLUMN_ZIP_CODE,
+                    WeatherDBContract.ForecastEntry.COLUMN_DESC,
+                    WeatherDBContract.ForecastEntry.COLUMN_ICON_NAME,
+                    WeatherDBContract.ForecastEntry.COLUMN_PRESSURE
+            )
         }
     }
 }
@@ -39,7 +53,7 @@ class WeatherDBSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABA
     }
 
     companion object {
-        private val DATABASE_VERSION = 1
+        private val DATABASE_VERSION = 5
         val DATABASE_NAME = "weather_db"
     }
 }

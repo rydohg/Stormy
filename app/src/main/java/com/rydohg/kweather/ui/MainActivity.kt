@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.rydohg.kweather.R
@@ -129,6 +130,21 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter = WeatherAdapter(result)
 
+        recyclerView.addOnItemTouchListener(
+                RecyclerItemClickListener(this, recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val intent = Intent(applicationContext, ForecastDetailActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putSerializable("forecast", result[position])
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+
+                    }
+                })
+        )
         val todayForecast = result[0]
 
         val todayImageView = findViewById<ImageView>(R.id.todayImageView)

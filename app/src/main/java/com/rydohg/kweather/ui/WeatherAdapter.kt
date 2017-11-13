@@ -18,7 +18,6 @@ class WeatherAdapter constructor(private val forecastList: ArrayList<Forecast>) 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CustomViewHolder {
         val layout = LayoutInflater.from(parent?.context)
                 .inflate(R.layout.list_item_forecast, parent, false) as ConstraintLayout
-
         return CustomViewHolder(layout)
     }
 

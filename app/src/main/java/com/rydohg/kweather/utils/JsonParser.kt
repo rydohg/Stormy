@@ -1,8 +1,15 @@
 package com.rydohg.kweather.utils
 
 import org.json.JSONObject
+import java.io.Serializable
 
-data class Forecast(val cityName: String, val datetime: Long, val desc: String, val iconName: String, val maxTempCelsius: Double, val minTempCelsius: Double)
+//TODO: Pass forecast to activity using JSON and GSON, not Serializable
+data class Forecast(val cityName: String,
+                    val datetime: Long,
+                    val desc: String,
+                    val iconName: String,
+                    val maxTempCelsius: Double,
+                    val minTempCelsius: Double) : Serializable
 
 class JsonParser(response: String?) {
     private val cityName: String?

@@ -41,10 +41,11 @@
         android:id="@+id/min_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="75°"
         android:textSize="42sp"
-        app:layout_constraintTop_toBottomOf="@+id/max_text_view"
-        tools:layout_editor_absoluteX="32dp" />
+        app:layout_constraintStart_toStartOf="@+id/max_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/max_text_view" />
 
     <TextView
         android:id="@+id/textView5"

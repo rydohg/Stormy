@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+
         if (!areForecastsRecent() && isNetworkAvailable()) {
             NetworkAsyncTask().execute()
         } else {
@@ -128,6 +130,19 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.addItemDecoration(mDividerItemDecoration)
 
+        val todayForecast = result[0]
+
+        val todayImageView = findViewById<ImageView>(R.id.todayImageView)
+        val minMaxTextView = findViewById<TextView>(R.id.min_max_text_view)
+
+        val todayForecastString = todayForecast.maxTempCelsius.toInt().toString() + "/" + todayForecast.minTempCelsius.toInt().toString()
+        minMaxTextView.text = todayForecastString
+
+        todayImageView.setImageDrawable(imageFromDesc(todayForecast.desc))
+
+        // Remove today's forecast from RecyclerView
+        result.remove(result[0])
+
         recyclerView.adapter = WeatherAdapter(result)
 
         recyclerView.addOnItemTouchListener(
@@ -145,15 +160,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
         )
-        val todayForecast = result[0]
-
-        val todayImageView = findViewById<ImageView>(R.id.todayImageView)
-        val minMaxTextView = findViewById<TextView>(R.id.min_max_text_view)
-
-        val todayForecastString = todayForecast.maxTempCelsius.toString() + "/" + todayForecast.minTempCelsius.toString()
-        minMaxTextView.text = todayForecastString
-
-        todayImageView.setImageDrawable(imageFromDesc(todayForecast.desc))
     }
 
     private fun writeToDB(result: ArrayList<Forecast>) {

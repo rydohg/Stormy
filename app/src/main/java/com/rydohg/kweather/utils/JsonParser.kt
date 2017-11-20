@@ -1,5 +1,6 @@
 package com.rydohg.kweather.utils
 
+import android.util.Log
 import org.json.JSONObject
 import java.io.Serializable
 
@@ -8,6 +9,8 @@ data class Forecast(val cityName: String,
                     val datetime: Long,
                     val desc: String,
                     val iconName: String,
+                    val precipType: String,
+                    val precipProbability: Double,
                     val maxTempCelsius: Double,
                     val minTempCelsius: Double) : Serializable
 
@@ -25,8 +28,11 @@ class JsonParser(response: String?) {
 
         (0 until rawForecastList.length()).forEach { i ->
             val jsonForecast = rawForecastList.getJSONObject(i)
+            Log.d("JSONParser", jsonForecast.toString())
             val high = jsonForecast.getDouble("temperatureHigh")
             val low = jsonForecast.getDouble("temperatureLow")
+            val probability = jsonForecast.getDouble("precipProbability")
+            val precipType = jsonForecast.getString("precipType")
             val description = jsonForecast.getString("summary")
             val iconString = jsonForecast.getString("icon")
 
@@ -35,6 +41,8 @@ class JsonParser(response: String?) {
                     jsonForecast.getLong("time"),
                     description,
                     iconString,
+                    precipType,
+                    probability,
                     high,
                     low
             )

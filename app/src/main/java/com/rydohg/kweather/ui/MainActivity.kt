@@ -53,13 +53,15 @@ class MainActivity : AppCompatActivity() {
             do {
                 val high = cursor.getDouble(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP))
                 val low = cursor.getDouble(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP))
+                val precipType = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_TYPE))
+                val probability = cursor.getDouble(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_PROBABILITY))
                 val date = cursor.getLong(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_DATE))
                 val desc = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_DESC))
                 val iconName = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_ICON_NAME))
                 /*val pressure = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_PRESSURE))
                 val zipCode = cursor.getString(cursor.getColumnIndex(WeatherDBContract.ForecastEntry.COLUMN_ZIP_CODE))*/
 
-                forecasts.add(Forecast("West Melbourne", date, desc, iconName, high, low))
+                forecasts.add(Forecast("West Melbourne", date, desc, iconName, precipType, probability, high, low))
             } while (cursor.moveToNext())
 
             populateRecyclerView(forecasts)
@@ -134,9 +136,12 @@ class MainActivity : AppCompatActivity() {
 
         val todayImageView = findViewById<ImageView>(R.id.todayImageView)
         val minMaxTextView = findViewById<TextView>(R.id.min_max_text_view)
+        val precipTextView = findViewById<TextView>(R.id.precip_text_view)
 
         val todayForecastString = todayForecast.maxTempCelsius.toInt().toString() + "/" + todayForecast.minTempCelsius.toInt().toString()
+        val precipString = (todayForecast.precipProbability * 100).toInt().toString() + "% Chance of " + todayForecast.precipType
         minMaxTextView.text = todayForecastString
+        precipTextView.text = precipString
 
         todayImageView.setImageDrawable(imageFromDesc(todayForecast.desc))
 
@@ -169,6 +174,8 @@ class MainActivity : AppCompatActivity() {
             values.put(WeatherDBContract.ForecastEntry.COLUMN_DATE, i.datetime)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP, i.maxTempCelsius)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP, i.minTempCelsius)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_TYPE, i.minTempCelsius)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_PROBABILITY, i.minTempCelsius)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_DESC, i.desc)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_ICON_NAME, i.iconName)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_PRESSURE, "1")

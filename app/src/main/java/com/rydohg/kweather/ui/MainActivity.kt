@@ -76,17 +76,15 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.settings_item -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.WeatherPreferenceFragment::class.java.name)
-                intent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true)
-                startActivity(intent)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.settings_item -> {
+            val intent = Intent(this, SettingsActivity::class.java)
+            intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.WeatherPreferenceFragment::class.java.name)
+            intent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true)
+            startActivity(intent)
+            true
         }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun isNetworkAvailable(): Boolean {
@@ -139,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         val precipTextView = findViewById<TextView>(R.id.precip_text_view)
 
         val todayForecastString = todayForecast.maxTempCelsius.toInt().toString() + "/" + todayForecast.minTempCelsius.toInt().toString()
-        val precipString = (todayForecast.precipProbability * 100).toInt().toString() + "% Chance of " + todayForecast.precipType
+        val precipString = (todayForecast.precipProbability * 100).toInt().toString() + "% Chance of " + todayForecast.precipType.capitalize()
         minMaxTextView.text = todayForecastString
         precipTextView.text = precipString
 
@@ -160,9 +158,7 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-                    override fun onLongItemClick(view: View?, position: Int) {
-
-                    }
+                    override fun onLongItemClick(view: View?, position: Int) {}
                 })
         )
     }
@@ -174,8 +170,8 @@ class MainActivity : AppCompatActivity() {
             values.put(WeatherDBContract.ForecastEntry.COLUMN_DATE, i.datetime)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_HIGH_TEMP, i.maxTempCelsius)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_LOW_TEMP, i.minTempCelsius)
-            values.put(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_TYPE, i.minTempCelsius)
-            values.put(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_PROBABILITY, i.minTempCelsius)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_TYPE, i.precipType)
+            values.put(WeatherDBContract.ForecastEntry.COLUMN_PRECIP_PROBABILITY, i.precipProbability)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_DESC, i.desc)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_ICON_NAME, i.iconName)
             values.put(WeatherDBContract.ForecastEntry.COLUMN_PRESSURE, "1")

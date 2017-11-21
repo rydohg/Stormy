@@ -28,11 +28,15 @@ class JsonParser(response: String?) {
 
         (0 until rawForecastList.length()).forEach { i ->
             val jsonForecast = rawForecastList.getJSONObject(i)
-            Log.d("JSONParser", jsonForecast.toString())
             val high = jsonForecast.getDouble("temperatureHigh")
             val low = jsonForecast.getDouble("temperatureLow")
             val probability = jsonForecast.getDouble("precipProbability")
-            val precipType = jsonForecast.getString("precipType")
+            var precipType = String()
+            if (jsonForecast.has("precipType")) {
+                precipType = jsonForecast.getString("precipType")
+            } else {
+                Log.d("JSONParser", i.toString())
+            }
             val description = jsonForecast.getString("summary")
             val iconString = jsonForecast.getString("icon")
 

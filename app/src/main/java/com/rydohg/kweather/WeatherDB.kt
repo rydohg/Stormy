@@ -59,7 +59,7 @@ class WeatherDBSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABA
     }
 
     companion object {
-        private val DATABASE_VERSION = 7
+        private val DATABASE_VERSION = 9
         val DATABASE_NAME = "weather_db"
     }
 }
